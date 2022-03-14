@@ -1142,7 +1142,9 @@ function App(props){
   const address2 = '707%20W%20Main%20St%20Henryetta%20OK%2074437'
   const api_key = 'AIzaSyAE3Bh7L6FsXGrfzJk75EMj8PGaHtXfryI';
   const endpoint = 'https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=' + address2 + '&includeOffices=true&key=' + api_key;
-  
+  const [countryOn,setCountryOn] = useState(false);
+  const [stateOn,setStateOn] = useState(false);
+  const [localOn,setLocalOn] = useState(true);
   /**
   useEffect(()=>{
     axios.get(endpoint)
@@ -1155,40 +1157,65 @@ function App(props){
     .catch(error => console.log(error));
   },[endpoint])
 */
+
+useEffect(() => {
+    filterData();
+  }, [countryOn,stateOn,localOn]);
   const filterOffice = (indx) =>{
     return fdata.offices.filter((office)=>{
       return office.officialIndices.includes(indx);
     })
   }
+  const getOfficialIndx = (name) =>{
+    let i = 0;
+    data.officials.map((official,indx)=>{if(official.name === name) i = indx;})
+    console.log(i);
+    return i;
+  }
+  const countryLevel = data.officials.filter((official,indx)=>{
+    return filterOffice(indx)[0].levels[0] === 'country';
+  });
   const stateLevel = data.officials.filter((official,indx)=>{
-    return filterOffice(indx)[0].levels[0] !== 'country';
+    return filterOffice(indx)[0].levels[0] === 'administrativeArea1';
   });
   const localLevel = data.officials.filter((official,indx)=>{
     return filterOffice(indx)[0].levels[0] !== 'country' && filterOffice(indx)[0].levels[0] !== 'administrativeArea1';
   });
-  console.log(stateLevel);
-  const filterData = (type) =>{
-    if(type==='country'){
-      setFData(data);
+  function filterData (){
+    let totalData = []
+    if(countryOn){
+      totalData.push.apply(totalData,countryLevel);
     }
-    if(type==='state'){
-      setFData({...data,officials:stateLevel});
+    if(stateOn){
+      totalData.push.apply(totalData,stateLevel);
     }
-    if(type==='local'){
-      setFData({...data,officials:localLevel});
+    if(localOn){
+        totalData.push.apply(totalData,localLevel);
     }
+    console.log(countryOn,stateOn,localOn);
+    console.log(totalData);
+    setFData({...data,officials:totalData});
   }
-
+  const start = () => {setFData({...data,officials:localLevel})};
   return (
+      
     <div className="App">
       <div id = 'selection-wrappers'>
-        <div onClick = {()=>{filterData('country')}}><h1>Country</h1></div>
-        <div onClick = {()=>{filterData('state')}}><h1>State</h1></div>
-        <div onClick = {()=>{filterData('local')}}><h1>Locality</h1></div>
+        <div onClick = {(e)=>{
+            setCountryOn(!countryOn,filterData)
+        }}><h1>Country</h1></div>
+        <div onClick = {(e)=>{
+            e.preventDefault();
+            setStateOn(!stateOn); 
+            filterData()}}><h1>State</h1></div>
+        <div onClick = {(e)=>{
+            e.preventDefault();
+            setLocalOn(!localOn); 
+            filterData()}}><h1>Local</h1></div>
       </div>
       { 
         fdata.officials.map((official,indx)=>{
-        return <OfficialComponent official = {official} office = {filterOffice(indx+data.officials.length-fdata.officials.length)} key = {indx}/>
+        return <OfficialComponent official = {official} office = {filterOffice(getOfficialIndx(official.name))} key = {indx}/>
         })
       }
     </div>
@@ -1203,12 +1230,10 @@ function OfficialComponent(props){
   const {name,address,party,phones,channels,photoUrl} = props.official;
   const office = props.office;
   const phone = phones[0];
-  console.log(channels)
   return (
     
   <div className="wrapper" id = {closed? 'half': ''}>
   <div className="official-card" onClick = {()=>{setClosed(!closed)}}>
-    <button onClick = {()=>{setClosed(!closed)}} id = 'minimize'/>
     <div className="name-wrapper">
       <h3><div id = 'name'>Name: {name===undefined? '' : name}</div><div id = 'office'> {office[0]===undefined? '' : office[0].name}</div></h3>
     </div>
@@ -1234,4 +1259,4 @@ function OfficialComponent(props){
 </div>)
 }
 
-//<address>{address[0].city} {address[0].line1} {address[0].state} {address[0].zip}</address> <button onClick> </button>
+//<address>{address[0].city} {address[0].line1} {address[0].state} {address[0].zip}</address> <button onClick> </button> <button onClick = {()=>{setClosed(!closed)}} id = 'minimize'/>
