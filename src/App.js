@@ -1135,7 +1135,7 @@ const dummyData = {
 //]
 //}
 function App(props){
-  
+  //name.replace(/\s/g, '%20')  --fix the address
   const [data,setData] = useState(dummyData);
   const [fdata,setFData] = useState(dummyData);
   const address = '165%20Main%20St%2C%20Annapolis%2C%20MD%2021401'
@@ -1181,11 +1181,11 @@ function App(props){
 
   return (
     <div className="App">
-      <nav>
-        <button onClick = {()=>{filterData('country')}}>Country</button>
-        <button onClick = {()=>{filterData('state')}}>State</button>
-        <button onClick = {()=>{filterData('local')}}>Locality</button>
-      </nav>
+      <div id = 'selection-wrappers'>
+        <div onClick = {()=>{filterData('country')}}><h1>Country</h1></div>
+        <div onClick = {()=>{filterData('state')}}><h1>State</h1></div>
+        <div onClick = {()=>{filterData('local')}}><h1>Locality</h1></div>
+      </div>
       { 
         fdata.officials.map((official,indx)=>{
         return <OfficialComponent official = {official} office = {filterOffice(indx+data.officials.length-fdata.officials.length)} key = {indx}/>
