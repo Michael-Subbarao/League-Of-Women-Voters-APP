@@ -1139,6 +1139,7 @@ function App(props){
   const address = '165%20Main%20St%2C%20Annapolis%2C%20MD%2021401'
   const api_key = 'AIzaSyAE3Bh7L6FsXGrfzJk75EMj8PGaHtXfryI';
   const endpoint = 'https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=' + address + '&includeOffices=true&key=' + api_key;
+  const [fdata,setFData] = useState(dummyData);
   //useEffect(()=>{
     //axios.get(endpoint)
     //.then(response =>{
@@ -1147,18 +1148,43 @@ function App(props){
     //})
     //.catch(error => console.log(error));
   //},[endpoint])
-  const filterData = (type) =>{
-
+  const filterOffice = (indx) =>{
+    return fdata.offices.filter((office)=>{
+      return office.officialIndices.includes(indx);
+    })
   }
-  console.log(data.officials)
+  const stateLevel = data.officials.filter((official,indx)=>{
+    return filterOffice(indx)[0].levels[0] !== 'country';
+  });
+  const localLevel = data.officials.filter((official,indx)=>{
+    return filterOffice(indx)[0].levels[0] !== 'country' && filterOffice(indx)[0].levels[0] !== 'administrativeArea1';
+  });
+  console.log(stateLevel);
+  const filterData = (type) =>{
+    if(type==='country'){
+      setFData(data);
+      console.log(fdata);
+    }
+    if(type==='state'){
+      setFData({...data,officials:stateLevel});
+      console.log(fdata);
+    }
+    if(type==='local'){
+      setFData({...data,officials:localLevel});
+    }
+  }
+
   return (
     <div className="App">
+      <nav>
+        <button onClick = {()=>{filterData('country')}}>Country</button>
+        <button onClick = {()=>{filterData('state')}}>State</button>
+        <button onClick = {()=>{filterData('local')}}>Locality</button>
+      </nav>
       { 
-        data.officials.map((official,indx)=>{
-          console.log(data.offices)
-        return <OfficialComponent official = {official} office = {data.offices[indx]===undefined?[]:data.offices[indx]} key = {indx}/>
+        fdata.officials.map((official,indx)=>{
+        return <OfficialComponent official = {official} office = {filterOffice(indx+data.officials.length-fdata.officials.length)} key = {indx}/>
         })
-        
       }
     </div>
   );
@@ -1171,8 +1197,8 @@ function OfficialComponent(props){
   const [official,setOfficial] = useState();
   const {name,address,party,phones,channels} = props.official;
   const office = props.office;
-
   const phone = phones[0];
+  
   return (
   <div className="wrapper">
   <div className="official-card">
@@ -1180,13 +1206,14 @@ function OfficialComponent(props){
       <h4>Name:</h4> <h3>{name===undefined? '' : name}</h3>
     </div>
     <div className="name-wrapper">
-      <h4>Office</h4> <h3>{office.name===undefined? '' : office.name}</h3>
+      <h4>Office</h4> <h3>{office[0]===undefined? '' : office[0].name}</h3>
     </div>
     <div className="address-wrapper">
     <h4>Address:</h4> <address>{address===undefined? '' : address[0].city + ' ' + address[0].line1 + ' ' +  address[0].state + ' ' +  address[0].zip}</address>
     </div>
+    <div className="name-wrapper">
     <h4>Phone Number</h4> <a href={'tel: ' + phone}>{phone}</a>
-    
+    </div>
   </div>
 </div>)
 }
