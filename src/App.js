@@ -1135,19 +1135,26 @@ const dummyData = {
 //]
 //}
 function App(props){
+  
   const [data,setData] = useState(dummyData);
-  const address = '165%20Main%20St%2C%20Annapolis%2C%20MD%2021401'
-  const api_key = 'AIzaSyAE3Bh7L6FsXGrfzJk75EMj8PGaHtXfryI';
-  const endpoint = 'https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=' + address + '&includeOffices=true&key=' + api_key;
   const [fdata,setFData] = useState(dummyData);
-  //useEffect(()=>{
-    //axios.get(endpoint)
-    //.then(response =>{
-      //console.log(response.data);
-      //setData(response.data);
-    //})
-    //.catch(error => console.log(error));
-  //},[endpoint])
+  const address = '165%20Main%20St%2C%20Annapolis%2C%20MD%2021401'
+  const address2 = '707%20W%20Main%20St%20Henryetta%20OK%2074437'
+  const api_key = 'AIzaSyAE3Bh7L6FsXGrfzJk75EMj8PGaHtXfryI';
+  const endpoint = 'https://civicinfo.googleapis.com/civicinfo/v2/representatives?address=' + address2 + '&includeOffices=true&key=' + api_key;
+  
+  /**
+  useEffect(()=>{
+    axios.get(endpoint)
+    .then(response =>{
+      console.log(response.data);
+      setFData(response.data)
+      setData(response.data);
+      ;
+    })
+    .catch(error => console.log(error));
+  },[endpoint])
+*/
   const filterOffice = (indx) =>{
     return fdata.offices.filter((office)=>{
       return office.officialIndices.includes(indx);
@@ -1163,11 +1170,9 @@ function App(props){
   const filterData = (type) =>{
     if(type==='country'){
       setFData(data);
-      console.log(fdata);
     }
     if(type==='state'){
       setFData({...data,officials:stateLevel});
-      console.log(fdata);
     }
     if(type==='local'){
       setFData({...data,officials:localLevel});
@@ -1194,25 +1199,28 @@ function App(props){
 export default App;
 
 function OfficialComponent(props){
-  const [official,setOfficial] = useState();
+  const [closed,setClosed] = useState(true);
   const {name,address,party,phones,channels} = props.official;
   const office = props.office;
   const phone = phones[0];
   
   return (
-  <div className="wrapper">
+  <div className="wrapper" id = {closed? 'half': ''}>
   <div className="official-card">
+    <button onClick = {()=>{setClosed(!closed)}} />
     <div className="name-wrapper">
       <h4>Name:</h4> <h3>{name===undefined? '' : name}</h3>
     </div>
-    <div className="name-wrapper">
-      <h4>Office</h4> <h3>{office[0]===undefined? '' : office[0].name}</h3>
+    <div id = {closed? 'closed': 'open'}>
+      <div className="name-wrapper">
+        <h4>Office</h4> <h3>{office[0]===undefined? '' : office[0].name}</h3>
+      </div>
+      <div className="address-wrapper">
+      <h4>Address:</h4> <address>{address===undefined? '' : address[0].city + ' ' + address[0].line1 + ' ' +  address[0].state + ' ' +  address[0].zip}</address>
+      </div>
+      <div className="name-wrapper">
+      <h4>Phone Number</h4> <a href={'tel: ' + phone}>{phone}</a>
     </div>
-    <div className="address-wrapper">
-    <h4>Address:</h4> <address>{address===undefined? '' : address[0].city + ' ' + address[0].line1 + ' ' +  address[0].state + ' ' +  address[0].zip}</address>
-    </div>
-    <div className="name-wrapper">
-    <h4>Phone Number</h4> <a href={'tel: ' + phone}>{phone}</a>
     </div>
   </div>
 </div>)
