@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import './App.css';
+import PlacesAutocomplete, {
+    geocodeByAddress,
+    getLatLng,
+  } from 'react-places-autocomplete';
 
 const dummyData = {
   "normalizedInput": {
@@ -1157,7 +1161,9 @@ function App(props){
     .catch(error => console.log(error));
   },[endpoint])
 */
-
+/**
+ * <input type="search" autocomplete="off" placeholder="Search Places..." value="707 " class="" style="display: inline-block; width: 100%; padding: 10px;">
+ */
 useEffect(() => {
     filterData();
   }, [countryOn,stateOn,localOn]);
@@ -1200,24 +1206,31 @@ useEffect(() => {
   return (
       
     <div className="App">
+    <div className="addressBar">
+
+    </div>
+    <div id = "repFinder">
       <div id = 'selection-wrappers'>
         <div onClick = {(e)=>{
             setCountryOn(!countryOn,filterData)
-        }}><h1>Country</h1></div>
+        }}><h2>Country{countryOn?'-':'+'}</h2></div>
         <div onClick = {(e)=>{
             e.preventDefault();
             setStateOn(!stateOn); 
-            filterData()}}><h1>State</h1></div>
+            filterData()}}><h2>State{stateOn?'-':'+'}</h2></div>
         <div onClick = {(e)=>{
             e.preventDefault();
             setLocalOn(!localOn); 
-            filterData()}}><h1>Local</h1></div>
+            filterData()}}><h2>Local{localOn?'-':'+'}</h2></div>
       </div>
+      <div id = 'reps'>
       { 
         fdata.officials.map((official,indx)=>{
         return <OfficialComponent official = {official} office = {filterOffice(getOfficialIndx(official.name))} key = {indx}/>
         })
       }
+      </div>
+    </div>
     </div>
   );
 }
@@ -1227,7 +1240,7 @@ export default App;
 
 function OfficialComponent(props){
   const [closed,setClosed] = useState(true);
-  const {name,address,party,phones,channels,photoUrl} = props.official;
+  const {name,address,party,phones,channels,photoUrl,emails} = props.official;
   const office = props.office;
   const phone = phones[0];
   return (
@@ -1254,6 +1267,7 @@ function OfficialComponent(props){
         }
         </div>
     </div>
+    <h4>Email: {emails===undefined?'' : emails[0]}</h4>
     </div>
   </div>
 </div>)

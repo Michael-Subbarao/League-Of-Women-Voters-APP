@@ -4,27 +4,58 @@ body {
   font-family: sans-serif;
   background-color: #f2f2f2;
 }
+h1{
+  font-size: calc(7px + 1.5vw);
+}
+h2,h3{
+  font-size: calc(7px + 1vw);
+}
+h4,h5,h6{
+  font-size: calc(7px + .5vw);
+}
+.app{
+  display:flex;
+  flex-direction: row;
+  width:100%;
+}
 #selection-wrappers{
   padding:10px;
   display: flex;
-  flex-direction: row;
-  border-top:10px 5px solid black;
+  flex-direction: column;
+  width:30%;
+}
+#selection-wrappers>div{
+  width:100%;
   border-bottom:5px solid black;
-  justify-content: space-around;
+}
+#reps{
+  display: flex;
+  flex-direction: column;
+  min-width:100%;
+}
+.wrapper{
+  display:flex;
+  flex-direction: column;
+}
+.name-wrapper{
+  min-width: 80%;
+  max-width: 80%;
 }
 .official-card {
   background-color: #fff;
   border: 0;
   box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, 0.12),
     0 2px 4px rgba(0, 0, 0, 0.24);
-  padding: 1rem;
-  cursor: pointer;
-  position: relative;
+  padding: .5rem;
   margin: 1rem auto;
-  width: 80%;
-
+  width:70%;
+  justify-content: space-between;
+  align-content: top;
 }
-
+#repFinder{
+  display:flex;
+  flex-direction: row;
+}
 .name-wrapper {
   display: flex;
   flex-direction: row;
@@ -50,10 +81,11 @@ body {
 }
 #closed {
   Visibility: Hidden;
+  max-height: fit-content;
 }
 
 #half {
-  height: 7vh;
+  max-height: 100px
 }
 
 .contact-wrapper{
