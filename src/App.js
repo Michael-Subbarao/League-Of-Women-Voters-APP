@@ -1200,26 +1200,34 @@ export default App;
 
 function OfficialComponent(props){
   const [closed,setClosed] = useState(true);
-  const {name,address,party,phones,channels} = props.official;
+  const {name,address,party,phones,channels,photoUrl} = props.official;
   const office = props.office;
   const phone = phones[0];
-  
+  console.log(channels)
   return (
+    
   <div className="wrapper" id = {closed? 'half': ''}>
-  <div className="official-card">
-    <button onClick = {()=>{setClosed(!closed)}} />
+  <div className="official-card" onClick = {()=>{setClosed(!closed)}}>
+    <button onClick = {()=>{setClosed(!closed)}} id = 'minimize'/>
     <div className="name-wrapper">
-      <h4>Name:</h4> <h3>{name===undefined? '' : name}</h3>
+      <h3><div id = 'name'>Name: {name===undefined? '' : name}</div><div id = 'office'> {office[0]===undefined? '' : office[0].name}</div></h3>
     </div>
     <div id = {closed? 'closed': 'open'}>
-      <div className="name-wrapper">
-        <h4>Office</h4> <h3>{office[0]===undefined? '' : office[0].name}</h3>
+      <div className="photo-wrapper">
+      <h4>Address: {address===undefined? '' : address[0].city + ' ' + address[0].line1 + ' ' +  address[0].state + ' ' +  address[0].zip}</h4> 
+      {photoUrl===undefined? '' : <img src = {photoUrl} alt = 'official'></img>}
       </div>
-      <div className="address-wrapper">
-      <h4>Address:</h4> <address>{address===undefined? '' : address[0].city + ' ' + address[0].line1 + ' ' +  address[0].state + ' ' +  address[0].zip}</address>
-      </div>
-      <div className="name-wrapper">
-      <h4>Phone Number</h4> <a href={'tel: ' + phone}>{phone}</a>
+      <div className="contact-wrapper">
+        <div>
+          <h4>Phone Number:</h4> <a href={'tel: ' + phone}>{phone}</a>
+        </div>
+        <div>
+        {
+          channels === undefined? '': channels.map((channel)=>{
+          return <a href ={'http://www.' + channel.type+'.com/' + channel.id}><ion-icon size = 'large' name={'logo-'+channel.type.toLowerCase() } ></ion-icon></a>
+        })
+        }
+        </div>
     </div>
     </div>
   </div>
