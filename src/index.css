@@ -11,3 +11,92 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f2f2f2;
+}
+
+h1{
+  font-size: calc(7px + 1.5vw);
+}
+h2,h3{
+  font-size: calc(7px + 1vw);
+}
+h4,h5,h6{
+  font-size: calc(7px + .5vw);
+}
+
+#lwvrep_selection_wrappers{
+  padding:10px;
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+}
+
+#lwv_reps{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.lwvrep_card{
+  display:flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 0;
+  box-shadow: 0 -1px 0 #e0e0e0, 0 0 2px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.24);
+  padding: .5rem;
+  margin: 1rem auto;
+  width:90%;
+  justify-content: space-between;
+}
+
+.lwvrep_App{
+  display:flex;
+  flex-direction: row;
+  width:100%;
+}
+.lwvrep_name_wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  width:100%;
+}
+.lwvrep_name_wrapper > h3{
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+}
+.lwvrep_photo_wrapper{
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+  align-content: center;
+}
+.lwvrep_photo_wrapper > img{
+  display: flex;
+  max-width:15vh;
+  justify-content: space-between;
+  align-content: center;
+}
+#lwvrep_closed {
+  Visibility: Hidden;
+  max-height: fit-content;
+}
+
+#lwvrep_half {
+  max-height: 12vh;
+}
+
+.lwvrep_contact_wrapper{
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+}
+.lwvrep_contact_wrapper > a{
+  display: flex;
+}
+
