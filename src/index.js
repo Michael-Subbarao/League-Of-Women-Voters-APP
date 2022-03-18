@@ -146,14 +146,12 @@ function lwvRep_renderComponent(address, api_key) {
     const office = props.office;
     const phone = phones[0];
     return (
-      <div className="lwvrep_card" id={closed ? "lwvrep_half" : ""} 
-      onClick={() => {
+      <div className="lwvrep_card" id={closed ? "lwvrep_half" : ""} >
+          <div className="lwvrep_name_wrapper" onClick={() => {
         setClosed(!closed);
       }}>
-        
-          <div className="lwvrep_name_wrapper">
             <h3>
-              <div id="lwvrep_name">{closed ? <ion-icon size="large" name='remove-outline'/>: <ion-icon size="large" name='add-outline'/>} {name === undefined ? "" : name}</div>
+              <div id="lwvrep_name">{!closed ? <ion-icon size="large" name='remove-outline'/>: <ion-icon size="large" name='add-outline'/>} {name === undefined ? "" : name}</div>
               <div id="lwvrep_office">
                 {" "}
                 {office[0] === undefined ? "" : office[0].name}
@@ -204,7 +202,7 @@ function lwvRep_renderComponent(address, api_key) {
                     })}
               </div>
             </div>
-            <h4>Email: {emails === undefined ? "" : emails[0]}</h4>
+            <h4>Email: <a href={emails === undefined ? "" : 'mailto:' + emails[0]}>{emails === undefined ? "" :emails[0]}</a></h4>
           </div>
       </div>
     );
