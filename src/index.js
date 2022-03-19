@@ -4,10 +4,8 @@ import "./index.css";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-const api_key = "AIzaSyAE3Bh7L6FsXGrfzJk75EMj8PGaHtXfryI";
+const api_key = "AIzaSyBL9e9-Owc0soWpWw3tcLkF_uYcoyLvlwE"; //Ip restricted
 const address = "165%20Main%20St%2C%20Annapolis%2C%20MD%2021401";
-
-
 
 function lwvRep_renderComponent(address, api_key) {
   const updatedAddress = address.replace(/\s/g, "%20"); //--fix the address if it has spaces
@@ -92,18 +90,16 @@ function lwvRep_renderComponent(address, api_key) {
       }
       setFData({ ...data, officials: totalData });
     }
-    const start = () => {
-      setFData({ ...data, officials: localLevel });
-    };
+
     return (
       <div className="lwvrep_App">
           <div id="lwvrep_selection_wrappers">
             <div
               onClick={(e) => {
-                setCountryOn(!countryOn, filterData);
+                setCountryOn(!countryOn);
               }}
             >
-              <h2>{countryOn ? <ion-icon size="large" name='add-outline'/>: <ion-icon size="large" name='remove-outline'/>} Country</h2>
+              <h2 className = "lwvrep_sidebar">{countryOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} Country</h2>
             </div>
             <div
               onClick={(e) => {
@@ -112,7 +108,7 @@ function lwvRep_renderComponent(address, api_key) {
                 filterData();
               }}
             >
-              <h2>{stateOn ?<ion-icon size="large" name='add-outline'/>: <ion-icon size="large" name='remove-outline'/>} State</h2>
+              <h2 className = "lwvrep_sidebar">{stateOn ?<ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} State</h2>
             </div>
             <div
               onClick={(e) => {
@@ -121,7 +117,8 @@ function lwvRep_renderComponent(address, api_key) {
                 filterData();
               }}
             >
-              <h2>{localOn ? <ion-icon size="large" name='add-outline'/>: <ion-icon size="large" name='remove-outline'/>} Local</h2>
+              
+              <h2 className = "lwvrep_sidebar">{localOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} Local</h2>
             </div>
           </div>
           <div id="lwvrep_reps">
@@ -151,7 +148,7 @@ function lwvRep_renderComponent(address, api_key) {
         setClosed(!closed);
       }}>
             <h3>
-              <div id="lwvrep_name">{!closed ? <ion-icon size="large" name='remove-outline'/>: <ion-icon size="large" name='add-outline'/>} {name === undefined ? "" : name}</div>
+              <div id="lwvrep_name"><div>{!closed ? <ion-icon size="small" name='remove-outline'/>: <ion-icon size="small" name='add-outline'/>}</div>{name === undefined ? "" : name}</div>
               <div id="lwvrep_office">
                 {" "}
                 {office[0] === undefined ? "" : office[0].name}
@@ -187,7 +184,7 @@ function lwvRep_renderComponent(address, api_key) {
                   ? ""
                   : channels.map((channel,i) => {
                       return (
-                        <a
+                        <a className = {'lwvrep_' + channel.type}
                           href={
                             "http://www." + channel.type + ".com/" + channel.id
                           }
@@ -209,4 +206,14 @@ function lwvRep_renderComponent(address, api_key) {
   }
   ReactDOM.render(<Parent />, document.getElementById("lwvrep_root"));
 }
-lwvRep_renderComponent(address, api_key);
+var originalFunction = lwvRep_renderComponent;
+window.lwvRep_renderComponent = function(a,b){
+  try {
+    var returnValue = originalFunction.call(this, a, b);
+    return returnValue;
+  }
+  catch (e) {
+    throw e;
+  }
+}
+//lwvRep_renderComponent("AIzaSyBL9e9-Owc0soWpWw3tcLkF_uYcoyLvlwE", "165%20Main%20St%2C%20Annapolis%2C%20MD%2021401");
