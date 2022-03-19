@@ -99,7 +99,7 @@ function lwvRep_renderComponent(address, api_key) {
                 setCountryOn(!countryOn);
               }}
             >
-              <h2 className = "lwvrep_sidebar">{countryOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} Country</h2>
+              <h2 className = "lwvrep_sidebar">{countryOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} National</h2>
             </div>
             <div
               onClick={(e) => {
