@@ -99,7 +99,8 @@ function lwvRep_renderComponent(address, api_key) {
                 setCountryOn(!countryOn);
               }}
             >
-              <h2 className = "lwvrep_sidebar">{countryOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} National</h2>
+              <h2 className = "lwvrep_sidebar"><div className="lwvrep_icons" title = {!countryOn ? "Show Federal": "Hide Federal"}>{countryOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} </div>
+              Federal</h2>
             </div>
             <div
               onClick={(e) => {
@@ -108,7 +109,7 @@ function lwvRep_renderComponent(address, api_key) {
                 filterData();
               }}
             >
-              <h2 className = "lwvrep_sidebar">{stateOn ?<ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} State</h2>
+              <h2 className = "lwvrep_sidebar"><div className="lwvrep_icons" title = {!stateOn ? "Show State": "Hide State"}>{stateOn ?<ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>}</div> State</h2>
             </div>
             <div
               onClick={(e) => {
@@ -118,7 +119,7 @@ function lwvRep_renderComponent(address, api_key) {
               }}
             >
               
-              <h2 className = "lwvrep_sidebar">{localOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>} Local</h2>
+              <h2 className = "lwvrep_sidebar"><div className="lwvrep_icons" title = {!localOn ? "Show Local": "Hide Local"}>{localOn ? <ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>}</div> Local</h2>
             </div>
           </div>
           <div id="lwvrep_reps">
@@ -148,7 +149,7 @@ function lwvRep_renderComponent(address, api_key) {
         setClosed(!closed);
       }}>
             <h3>
-              <div id="lwvrep_name"><div>{!closed ? <ion-icon size="small" name='remove-outline'/>: <ion-icon size="small" name='add-outline'/>}</div>{name === undefined ? "" : name}</div>
+              <div id="lwvrep_name"><div className="lwvrep_icons" title = {closed ? "Expand": "Minimize"}>{!closed ? <ion-icon size="small" name='remove-outline'/>: <ion-icon size="small" name='add-outline'/>}</div>{name === undefined ? "" : name}</div>
               <div id="lwvrep_office">
                 {" "}
                 {office[0] === undefined ? "" : office[0].name}
@@ -179,7 +180,7 @@ function lwvRep_renderComponent(address, api_key) {
               <div>
                 <h4>Phone Number:</h4> <a href={"tel: " + phone}>{phone}</a>
               </div>
-              <div>
+              <div className = 'lwvrep_channels'>
                 {channels === undefined
                   ? ""
                   : channels.map((channel,i) => {
@@ -188,12 +189,16 @@ function lwvRep_renderComponent(address, api_key) {
                           href={
                             "http://www." + channel.type + ".com/" + channel.id
                           }
+                          target="_blank"
+                          rel = "noreferrer"
                           key = {i}
                         >
+                          <div title = {name + "'s " + channel.type} >
                           <ion-icon
                             size="large"
                             name={"logo-" + channel.type.toLowerCase()}
                           ></ion-icon>
+                          </div>
                         </a>
                       );
                     })}

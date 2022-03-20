@@ -10,6 +10,9 @@ body {
   font-family: sans-serif;
   background-color: #f2f2f2;
 }
+ion-icon {
+  pointer-events: none;
+ }
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -58,7 +61,10 @@ code {
 #lwvrep_half {
   max-height: 12vh;
 }
-
+.lwvrep_icon{
+  display:flex;
+  flex-direction:row;
+}
 .lwvrep_name_wrapper {
   display: flex;
   flex-direction: row;
@@ -79,6 +85,12 @@ code {
 .lwvrep_sidebar{
   font-size: calc(15px + .7vw);
   width: max-content;
+  display:flex;
+  flex-direction: row;
+}
+.lwvrep_channels{
+  display:flex;
+  flex-direction: row;
 }
 #lwvrep_closed {
   Visibility: Hidden;
