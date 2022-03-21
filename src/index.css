@@ -93,7 +93,7 @@ code {
   flex-direction: row;
 }
 #lwvrep_closed {
-  Visibility: Hidden;
+  display: none;
   max-height: fit-content;
 }
 .lwvrep_icon{

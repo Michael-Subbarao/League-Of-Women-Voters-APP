@@ -19,16 +19,40 @@ function lwvRep_renderComponent(address, api_key) {
   {
     const [apiData,setApiData] = useState('');
     const [isLoading, setLoading] = useState(true);
+    const [errors,setErrors] = useState('')
     useEffect(() => { 
+      setErrors('Loading...')
       axios
         .get(endpoint)
         .then((response) => {
             setApiData(response.data);
             setLoading(false);
+            setErrors('')
           })
-          .catch((error) => console.log(error))},[])
+        .catch(function (error){
+          if (error.response) {
+            // Request made and server responded
+            console.log(error.response.data.error.errors[0].message.includes('address'));
+            if(error.response.data.error.errors[0].message.includes('address'))
+            {
+              setErrors('Invalid address. Please make sure your address is formatted correctly.')
+            }
+            else{
+              setErrors(`Uh oh, looks like something went wrong here. Error ${error.response.data.error.code}: ${error.response.data.error.message}`)
+            }
+          } else if (error.request) {
+            // The request was made but no response was received
+            console.log(error.request);
+            setErrors('Uh oh, looks like something went wrong here.')
+          } else {
+            // Something happened in setting up the request that triggered an Error
+            console.log('Error', error.message);
+            setErrors('Uh oh, looks like something went wrong here.')
+          }
+        }
+        )},[])
     if (isLoading) {
-        return <div className="lwvrep_App">Loading...</div>;
+        return <div className="lwvrep_Errors">{errors}</div>;
       }
     else{
       return(
@@ -44,58 +68,55 @@ function lwvRep_renderComponent(address, api_key) {
     const [stateOn, setStateOn] = useState(false);
     const [localOn, setLocalOn] = useState(true);
     const [data,setData] = useState(apiData);
-    const [fdata,setFData] = useState(apiData);
 
-    //getting data from endpoint
-    
- 
-    useEffect(() => {
-      filterData();
-    }, [countryOn, stateOn, localOn]);
-    
-    const filterOffice = (indx) => {
-      return fdata.offices.filter((office) => {
-        return office.officialIndices.includes(indx);
-      });
-    };
-    const getOfficialIndx = (name) => {
-      let i = 0;
-      data.officials.map((official, indx) => {
-        if (official.name === name) i = indx;
-      });
-      return i;
-    };
-    const countryLevel = data.officials.filter((official, indx) => {
+    const [countryData,setCountryData] = useState(apiData.officials.filter((official, indx) => {
       return filterOffice(indx)[0].levels[0] === "country";
-    });
-    const stateLevel = data.officials.filter((official, indx) => {
+    }));
+    const [stateData,setStateData] = useState(apiData.officials.filter((official, indx) => {
       return filterOffice(indx)[0].levels[0] === "administrativeArea1";
-    });
-    const localLevel = data.officials.filter((official, indx) => {
+    }));
+    const [localData,setLocalData] = useState(apiData.officials.filter((official, indx) => {
       return (
         filterOffice(indx)[0].levels[0] !== "country" &&
         filterOffice(indx)[0].levels[0] !== "administrativeArea1"
       );
-    });
-    function filterData() {
-      let totalData = [];
-      if (countryOn) {
-        totalData.push.apply(totalData, countryLevel);
+    }))
+
+    function toggleVisibillity(className, displayState){
+      let elements = document.getElementsByClassName(className)
+  
+      for (var i = 0; i < elements.length; i++){
+          elements[i].style.display = displayState;
       }
-      if (stateOn) {
-        totalData.push.apply(totalData, stateLevel);
-      }
-      if (localOn) {
-        totalData.push.apply(totalData, localLevel);
-      }
-      setFData({ ...data, officials: totalData });
+  }
+    useEffect(() => {
+      filterData();
+    }, [stateOn,localOn,countryOn]);
+    function filterData(){
+      !countryOn?toggleVisibillity('lwvrep_country','none'):toggleVisibillity('lwvrep_country','');
+      !stateOn?toggleVisibillity('lwvrep_state','none'):toggleVisibillity('lwvrep_state','');
+      !localOn?toggleVisibillity('lwvrep_local','none'):toggleVisibillity('lwvrep_local','');
     }
 
+    function filterOffice(indx) {
+      return apiData.offices.filter((office) => {
+        return office.officialIndices.includes(indx);
+      });
+    };
+    function getOfficialIndx(name) {
+      let i = 0;
+      apiData.officials.map((official, indx) => {
+        if (official.name === name) i = indx;
+      });
+      return i;
+    };
+    
     return (
       <div className="lwvrep_App">
           <div id="lwvrep_selection_wrappers">
             <div
               onClick={(e) => {
+                e.preventDefault();
                 setCountryOn(!countryOn);
               }}
             >
@@ -106,7 +127,6 @@ function lwvRep_renderComponent(address, api_key) {
               onClick={(e) => {
                 e.preventDefault();
                 setStateOn(!stateOn);
-                filterData();
               }}
             >
               <h2 className = "lwvrep_sidebar"><div className="lwvrep_icons" title = {!stateOn ? "Show State": "Hide State"}>{stateOn ?<ion-icon className='lwvrep_icon' size="medium" name='add-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='remove-outline'/>}</div> State</h2>
@@ -115,7 +135,6 @@ function lwvRep_renderComponent(address, api_key) {
               onClick={(e) => {
                 e.preventDefault();
                 setLocalOn(!localOn);
-                filterData();
               }}
             >
               
@@ -123,15 +142,46 @@ function lwvRep_renderComponent(address, api_key) {
             </div>
           </div>
           <div id="lwvrep_reps">
-            {fdata.officials.map((official, indx) => {
+            {console.log(countryData)}
+            {
+              countryData === undefined ?``: countryData.map((official, indx) => {
               return (
+                <div className = 'lwvrep_country'>
                 <OfficialComponent
                   official={official}
                   office={filterOffice(getOfficialIndx(official.name))}
-                  key={indx}
+                  key={'country' + indx}
                 />
+                </div>
               );
-            })}
+            })
+          }
+          {
+              stateData === undefined ?``: stateData.map((official, indx) => {
+              return (
+                <div className = 'lwvrep_state'>
+                <OfficialComponent
+                  official={official}
+                  office={filterOffice(getOfficialIndx(official.name))}
+                  key={'state' +indx}
+                />
+                </div>
+              );
+            })
+          }
+          {
+              localData === undefined ?`$`: localData.map((official, indx) => {
+              return (
+                <div className = 'lwvrep_local'>
+                <OfficialComponent
+                  official={official}
+                  office={filterOffice(getOfficialIndx(official.name))}
+                  key={'local' + indx}
+                />
+                </div>
+              );
+            })
+          }
           </div>
       </div>
     );
@@ -142,7 +192,13 @@ function lwvRep_renderComponent(address, api_key) {
     const { name, address, party, phones, channels, photoUrl, emails } =
       props.official;
     const office = props.office;
-    const phone = phones[0];
+    const phone = phones ? phones[0]:'000-000-0000';
+    const addDefaultSrc = (ev) =>{//Empty img in case of an invalid image url
+      ev.target.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
+      ev.target.width="0" ;
+      ev.target.height="0";
+      ev.target.alt="";
+    }
     return (
       <div className="lwvrep_card" id={closed ? "lwvrep_half" : ""} >
           <div className="lwvrep_name_wrapper" onClick={() => {
@@ -170,11 +226,9 @@ function lwvRep_renderComponent(address, api_key) {
                     " " +
                     address[0].zip}
               </h4>
-              {photoUrl === undefined ? (
-                ""
-              ) : (
-                <img src={photoUrl} alt="official"></img>
-              )}
+              {
+                photoUrl === undefined ? ("") : <img onError={(e)=>{addDefaultSrc(e)}} src={photoUrl} alt="official"></img>
+              }
             </div>
             <div className="lwvrep_contact_wrapper">
               <div>
