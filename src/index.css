@@ -79,8 +79,13 @@ code {
   justify-content: space-between;
 }
 #lwvrep_name{
+  margin-right: 10px;
   display:flex;
   flex-direction: row;
+  text-align: center;
+}
+#lwvrep_office{
+  text-align: center;
 }
 .lwvrep_sidebar{
   font-size: calc(15px + .7vw);

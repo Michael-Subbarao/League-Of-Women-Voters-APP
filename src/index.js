@@ -192,7 +192,7 @@ function lwvRep_renderComponent(address, api_key) {
     const { name, address, party, phones, channels, photoUrl, emails } =
       props.official;
     const office = props.office;
-    const phone = phones ? phones[0]:'000-000-0000';
+    const phone = phones ? phones[0]:'';
     const addDefaultSrc = (ev) =>{//Empty img in case of an invalid image url
       ev.target.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
       ev.target.width="0" ;
