@@ -142,7 +142,6 @@ function lwvRep_renderComponent(address, api_key) {
             </div>
           </div>
           <div id="lwvrep_reps">
-            {console.log(countryData)}
             {
               countryData === undefined ?``: countryData.map((official, indx) => {
               return (
