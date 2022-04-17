@@ -29,31 +29,32 @@ function LWVRepComponent(props) {
           elements[i].style.display = displayState;
       }
   }
+  function filterData(){
+    !countryOn?toggleVisibility('lwvrep_country','none'):toggleVisibility('lwvrep_country','');
+    !stateOn?toggleVisibility('lwvrep_state','none'):toggleVisibility('lwvrep_state','');
+    !localOn?toggleVisibility('lwvrep_local','none'):toggleVisibility('lwvrep_local','');
+  }
     useEffect(() => {
       filterData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [stateOn,localOn,countryOn]);
-    function filterData(){
-      !countryOn?toggleVisibility('lwvrep_country','none'):toggleVisibility('lwvrep_country','');
-      !stateOn?toggleVisibility('lwvrep_state','none'):toggleVisibility('lwvrep_state','');
-      !localOn?toggleVisibility('lwvrep_local','none'):toggleVisibility('lwvrep_local','');
-    }
+    
   
     function filterOffice(indx) {
       return apiData.offices.filter((office) => {
         return office.officialIndices.includes(indx);
       });
     };
+
     function getOfficialIndx(name) {
-      return apiData.officials.map((official, indx) => {
-        if (official.name === name) return indx;
-        return null;
-      });
+      return apiData.officials.findIndex(object =>{
+        return object.name === name;
+      })
    };
     
     return (
       <div className="lwvrep_App">
-          <div id="lwvrep_selection_wrappers">
+          <div className="lwvrep_selection_wrappers">
             <div
               onClick={(e) => {
                 e.preventDefault();
@@ -81,15 +82,14 @@ function LWVRepComponent(props) {
               <h2 className = "lwvrep_sidebar"><div className="lwvrep_icons" title = {!localOn ? "Show Local": "Hide Local"}>{localOn ? <ion-icon className='lwvrep_icon' size="medium" name='checkmark-circle-outline'/>: <ion-icon className='lwvrep_icon' size="medium" name='ellipse-outline'/>}</div> Local</h2>
             </div>
           </div>
-          <div id="lwvrep_reps">
+          <div className="lwvrep_reps">
             {
               countryData === undefined ?``: countryData.map((official, indx) => {
               return (
-                <div className = 'lwvrep_country'>
+                <div className = 'lwvrep_country' key={indx.toString()}>
                 <LWVRepCard
                   official={official}
                   office={filterOffice(getOfficialIndx(official.name))}
-                  key={'country' + indx}
                 />
                 </div>
               );
@@ -98,11 +98,10 @@ function LWVRepComponent(props) {
           {
               stateData === undefined ?``: stateData.map((official, indx) => {
               return (
-                <div className = 'lwvrep_state'>
+                <div className = 'lwvrep_state' key={indx.toString()}> 
                 <LWVRepCard
                   official={official}
                   office={filterOffice(getOfficialIndx(official.name))}
-                  key={'state' +indx}
                 />
                 </div>
               );
@@ -111,11 +110,10 @@ function LWVRepComponent(props) {
           {
               localData === undefined ?`$`: localData.map((official, indx) => {
               return (
-                <div className = 'lwvrep_local'>
+                <div className = 'lwvrep_local' key={indx.toString()}>
                 <LWVRepCard
                   official={official}
                   office={filterOffice(getOfficialIndx(official.name))}
-                  key={'local' + indx}
                 />
                 </div>
               );

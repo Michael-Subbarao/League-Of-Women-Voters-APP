@@ -4,7 +4,7 @@ function LWVRepCard(props) {
     const [closed, setClosed] = useState(true);
     const { name, address, phones, channels, photoUrl, emails } =
       props.official;
-    const office = props.office;
+    const {office} = props;
     const phone = phones ? phones[0]:'';
     const addDefaultSrc = (ev) =>{//Empty img in case of an invalid image url
       ev.target.src = "data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=";
@@ -13,19 +13,19 @@ function LWVRepCard(props) {
       ev.target.alt="";
     }
     return (
-      <div className="lwvrep_card" id={closed ? "lwvrep_half" : ""} >
+      <div className={closed ? "lwvrep_card lwvrep_half" : "lwvrep_card"} >
           <div className="lwvrep_name_wrapper" onClick={() => {
         setClosed(!closed);
       }}>
             <h3>
-              <div id="lwvrep_name"><div className="lwvrep_icons" title = {closed ? "Expand": "Minimize"}>{!closed ? <ion-icon size="small" name='remove-outline'/>: <ion-icon size="small" name='add-outline'/>}</div>{name === undefined ? "" : name}</div>
-              <div id="lwvrep_office">
+              <div className="lwvrep_name"><div className="lwvrep_icons" title = {closed ? "Expand": "Minimize"}>{!closed ? <ion-icon size="small" name='remove-outline'/>: <ion-icon size="small" name='add-outline'/>}</div>{name === undefined ? "" : name}</div>
+              <div className="lwvrep_office">
                 {" "}
-                {office[0] === undefined ? "" : office[0].name}
+                {office[0] === undefined ? "No Office Found" : office[0].name}
               </div>
             </h3>
           </div>
-          <div id={closed ? "lwvrep_closed" : "lwvrep_open"}>
+          <div className={closed ? "lwvrep_closed" : "lwvrep_open"}>
             <div className="lwvrep_photo_wrapper">
               <h4>
                 Address:{" "}
@@ -58,12 +58,13 @@ function LWVRepCard(props) {
                           }
                           target="_blank"
                           rel = "noreferrer"
-                          key = {i}
+                          key = {channel.type + channel.id}
                         >
-                          <div title = {name + "'s " + channel.type} >
+                          <div title = {name + "'s " + channel.type} key = {channel.type + channel.id + "title"}>
                           <ion-icon
                             size="large"
                             name={"logo-" + channel.type.toLowerCase()}
+                            key = {channel.type + channel.id + "logo"}
                           ></ion-icon>
                           </div>
                         </a>

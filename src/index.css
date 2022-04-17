@@ -1,12 +1,19 @@
-body {
-  
-  margin: 0;
+h1,h2,h3,h4,h5,h6,a,p {
+  display: block;
+  margin-block-start: .5em;
+  margin-block-end: .5em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  font-weight: bold;
+}
+
+body{
+  margin: 2px;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  margin: 0;
   padding: 0;
   font-family: sans-serif;
   background-color:#FAFAFA;
@@ -19,35 +26,29 @@ code {
     monospace;
 }
 
-#lwvrep_card {
-  position: relative;
-  font-size: 5rem;
-}
-
-#lwv_root>h1{
-  font-size: calc(20px + .7vw);
-}
-#lwv_root>h2,h3{
-  font-size: calc(15px + .5vw);
-}
-#lwv_root>h4,h5,h6{
-  font-size: calc(13px + .3vw);
-}
+#lwvrep_root > * h1{
+      font-size: calc(20px + .7vw);
+    }
+#lwvrep_root > * h2,h3{
+    font-size: calc(15px + .5vw);
+  }
+#lwvrep_root > * h4,h5,h6{
+    font-size: calc(13px + .3vw);
+  }
 
 .lwvrep_App{
   display:flex;
   flex-direction: row;
   width:100%;
-  
 }
-#lwvrep_selection_wrappers{
+.lwvrep_selection_wrappers{
   padding:10px;
   display: flex;
   flex-direction: column;
   width: max-content;
 }
 
-#lwvrep_reps{
+.lwvrep_reps{
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -71,7 +72,7 @@ code {
 }
 
 
-#lwvrep_half {
+.lwvrep_half {
   max-height: 12vh;
 }
 .lwvrep_icon{
@@ -91,13 +92,13 @@ code {
   width:100%;
   justify-content: space-between;
 }
-#lwvrep_name{
+.lwvrep_name{
   margin-right: 10px;
   display:flex;
   flex-direction: row;
   text-align: center;
 }
-#lwvrep_office{
+.lwvrep_office{
   text-align: center;
 }
 .lwvrep_sidebar{
@@ -110,7 +111,7 @@ code {
   display:flex;
   flex-direction: row;
 }
-#lwvrep_closed {
+.lwvrep_closed {
   display: none;
   max-height: fit-content;
 }
@@ -147,4 +148,15 @@ code {
 }
 .lwvrep_Facebook{
   color: #4267B2;
+}
+
+@media (max-width: 700px) {
+  .lwvrep_App {
+    flex-direction: column;
+  }
+  .lwvrep_selection_wrappers{
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+  }
 }
