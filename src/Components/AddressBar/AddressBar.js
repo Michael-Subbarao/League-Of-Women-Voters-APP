@@ -8,7 +8,7 @@ import {
   ComboboxOption
 } from "@reach/combobox";
 import "@reach/combobox/styles.css";
-import App from "./../App";
+import App from "../App";
 
 export default function AddressBar() {
   const {
@@ -40,19 +40,14 @@ export default function AddressBar() {
     return (
       <>
         {suggestions}
-        <li className="logo">
-          <img
-            src="https://developers.google.com/maps/documentation/images/powered_by_google_on_white.png"
-            alt="Powered by Google"
-          />
-        </li>
       </>
     );
   };
 
   return (
-    <div className="App">
-      <h1 className="title">Enter Your Address</h1>
+    <div className="lwvrep_addressBar">
+      <div className="lwvrep_hide" style = {submitted? {display: "none"} : {} }>
+      <h1 className="lwvrep_title">Enter Your Address</h1>
       <Combobox onSelect={handleSelect}>
         <ComboboxInput
           style={{ width: 300, maxWidth: "90%" }}
@@ -65,9 +60,10 @@ export default function AddressBar() {
           <ComboboxList>{status === "OK" && renderSuggestions()}</ComboboxList>
         </ComboboxPopover>
       </Combobox>
-      <button onClick={handleSubmit}>
+      <button className = "lwvrep_submit" onClick={handleSubmit}>
           Submit
       </button>
+      </div>
       {submitted && <App address={value} apiKey= 'AIzaSyBL9e9-Owc0soWpWw3tcLkF_uYcoyLvlwE'/>}
     </div>
   );
