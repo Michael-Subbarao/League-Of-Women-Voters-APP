@@ -83,19 +83,19 @@ To get a local copy up and running follow these steps.
    ```sh
    npm i
    ```
-5. Enter your Civic Data API key in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+5. Create `.env` in root folder and add your Civic Data API key as follows
+   ```env
+   REACT_APP_API_KEY=YOUR_API_KEY_HERE
    ```
 5. Enter your Google Maps API key in the script tag in the index.html
    ```html
    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY_HERE&libraries=places"></script>
    ```
-6. npm run server to view a local copy
+6. npm run start to view a local copy
     ```sh
-    npm run server
+    npm run start
     ```
-7. To deploy for production npm run build
+7. To deploy for production npm run build and add your api key into the environment where it is deployed
     ```sh
     npm run build
     ```
