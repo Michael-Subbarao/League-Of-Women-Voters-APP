@@ -35,21 +35,23 @@
 
 
 
-<!-- ABOUT THE PROJECT -->
 ## About The Project
+This app was made for the Women Voters League of Maryland to allow users to find the contact information for all of their local representatives based on their address. This app is currently being deployed across multiple counties Women League of Voters sites in Maryland. See: (https://www.lwvwashco.org/representatives) for an example. 
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+## Features
+Shows the following contact details for representatives filtered on Local State or Federal level
+* Name
+* Address (if available)
+* Phone Number (if available) with direct phone link
+* Email (if available) - with direct mailto tag
+* Office
+* Photo(if available)
+* Social Media Channels(if available) - Youtube/Twitter/Facebook with direct links
 
-There are many great README templates available on GitHub; however, I didn't find one that really suited my needs so I created this enhanced one. I want to create a README template so amazing that it'll be the last one you ever need -- I think this is it.
+App is responsive for mobile
 
-Here's why:
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should implement DRY principles to the rest of your life :smile:
-
-Of course, no one template will serve all projects since your needs may be different. So I'll be adding more in the near future. You may also suggest changes by forking this repo and creating a pull request or opening an issue. Thanks to all the people have contributed to expanding this template!
-
-Use the `BLANK_README.md` to get started.
+Minimal CSS stylings are used for this demo version.
+* In deployment non-structural CSS design is done by League of Women Voters
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -70,7 +72,6 @@ To get a local copy up and running follow these steps.
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Get a Civic Data API See: https://developers.google.com/maps/documentation/embed/get-api-key
 2. Get a Google Maps API See:  https://developers.google.com/civic-information/docs/using_api  (Notice they can be the same api-key if you restrict your api-key. However as Google Maps API key requires you to include it in an src tag, you may wish to have a separate key restricted to just Google Maps API. See https://cloud.google.com/docs/authentication/api-keys for best practices and management of api keys)
