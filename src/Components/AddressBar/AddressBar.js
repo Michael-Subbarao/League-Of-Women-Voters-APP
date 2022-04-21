@@ -10,13 +10,18 @@ import {
 import "@reach/combobox/styles.css";
 import App from "../App";
 
+
 export default function AddressBar() {
+  const API_KEY = process.env.REACT_APP_API_KEY;
   const {
     ready,
     value,
     suggestions: { status, data },
-    setValue
+    setValue,
+    clearSuggestions
   } = usePlacesAutocomplete({
+    requestOptions: {
+    },
     debounce: 1000
   });
   
@@ -28,11 +33,13 @@ export default function AddressBar() {
 
   const handleSelect = (val) => {
     setValue(val, false);
+    clearSuggestions();
   };
   const handleSubmit = (e) => {
     setSubmitted(true);
   }
   const renderSuggestions = () => {
+
     const suggestions = data.map(({ place_id, description }) => (
       <ComboboxOption key={place_id} value={description} />
     ));
@@ -48,7 +55,7 @@ export default function AddressBar() {
     <div className="lwvrep_addressBar">
       <div className="lwvrep_hide" style = {submitted? {display: "none"} : {} }>
       <h1 className="lwvrep_title">Enter Your Address</h1>
-      <Combobox onSelect={handleSelect}>
+      <Combobox className = "lwvrep_addressForm" onSelect={handleSelect}>
         <ComboboxInput
           style={{ width: 300, maxWidth: "90%" }}
           value={value}
@@ -64,7 +71,7 @@ export default function AddressBar() {
           Submit
       </button>
       </div>
-      {submitted && <App address={value} apiKey= 'AIzaSyBL9e9-Owc0soWpWw3tcLkF_uYcoyLvlwE'/>}
+      {submitted && <App address={value} apiKey= {API_KEY}/>}
     </div>
   );
 }
