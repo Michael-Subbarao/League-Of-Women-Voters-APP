@@ -39,7 +39,7 @@
 This app was made for the Women Voters League of Maryland to allow users to find the contact information for all of their local representatives based on their address. This app is currently being deployed across multiple counties Women League of Voters sites in Maryland. See: (https://www.lwvwashco.org/representatives) for an example. 
 
 ## Features
-Shows the following contact details for representatives filtered on Local State or Federal level
+Shows the following contact details for representatives filtered on Local, State, or Federal level
 * Name
 * Address (if available)
 * Phone Number (if available) with direct phone link
