@@ -83,7 +83,7 @@ To get a local copy up and running follow these steps.
    ```sh
    npm i
    ```
-5. Create `.env` in root folder and add your Civic Data API key as follows
+5. Create `.env` (or `.env.local`) in root folder and add your Civic Data API key as follows
    ```env
    REACT_APP_API_KEY=YOUR_API_KEY_HERE
    ```
@@ -105,9 +105,7 @@ To get a local copy up and running follow these steps.
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
-
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this project better, please fork the repo and create a pull request.
 
 1. Fork the Project
 2. Create your Feature Branch (`git checkout -b feature/FeatureName`)
