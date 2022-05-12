@@ -129,7 +129,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Michael Subbarao - [LinkedIn](https://www.linkedin.com/in/michael-subbarao-661a6b229/) - Subbarao.michael@gmail.com
+Michael Subbarao - [LinkedIn](https://www.linkedin.com/in/michael-subbarao/) - Subbarao.michael@gmail.com
 
 Project Link: [Repo Link](https://github.com/Michael-Subbarao/League-of-Women-Voters-App)
 
