@@ -161,7 +161,30 @@ code {
 .lwvrep_Facebook{
   color: #4267B2;
 }
-
+.lwvrep_title{
+  color: #334155;
+}
+.lwvrep_inputForm{
+  border-radius:10px;
+  border: 1px solid #eee;
+  transition: .3s border-color;
+  height: 2rem;
+  font-size: calc(15px + .5vw);
+}
+.lwvrep_inputForm:hover {
+  border: 1px solid #aaa;
+}
+.lwvrep_submit{
+  background: hsl(202, 100%, 42%);
+  color: #e2e8f0;
+  border-style: outset;
+  border-color: #0066A2;
+  border-radius: 10%;
+  height: 50px;
+  width: 100px;
+  font: bold15px arial,sans-serif;
+  text-shadow: none;
+}
 @media (max-width: 700px) {
   .lwvrep_App {
     flex-direction: column;

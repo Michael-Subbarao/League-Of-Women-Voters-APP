@@ -50,7 +50,8 @@ export default function AddressBar() {
         <h1 className="lwvrep_title">Enter Your Address</h1>
         <Combobox className="lwvrep_addressForm" onSelect={handleSelect}>
           <ComboboxInput
-            style={{ width: "100%", maxWidth: "100%", border: "2px solid black" }}
+            className = "lwvrep_inputForm"
+            style={{ width: "100%", maxWidth: "100%"}}
             value={value}
             onChange={handleInput}
             disabled={!ready}
@@ -62,7 +63,7 @@ export default function AddressBar() {
             </ComboboxList>
           </ComboboxPopover>
         </Combobox>
-        <button className="lwvrep_submit" onClick={handleSubmit}>
+        <button className="lwvrep_submit" onClick={value && handleSubmit}>
           Submit
         </button>
       </div>
