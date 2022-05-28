@@ -34,6 +34,10 @@ export default function AddressBar() {
     clearSuggestions();
   };
   const handleSubmit = (e) => {
+    e.preventDefault();
+    if (value === "") {
+      return false;
+    }
     setSubmitted(true);
   };
   const renderSuggestions = () => {
@@ -51,7 +55,7 @@ export default function AddressBar() {
         <Combobox className="lwvrep_addressForm" onSelect={handleSelect}>
           <ComboboxInput
             className = "lwvrep_inputForm"
-            style={{ width: "100%", maxWidth: "100%"}}
+            style={{ width: "100%", maxWidth: "100%", outline: "black 2px solid" }}
             value={value}
             onChange={handleInput}
             disabled={!ready}
@@ -63,7 +67,7 @@ export default function AddressBar() {
             </ComboboxList>
           </ComboboxPopover>
         </Combobox>
-        <button className="lwvrep_submit" onClick={value && handleSubmit}>
+        <button className="lwvrep_submit" onClick={handleSubmit}>
           Submit
         </button>
       </div>

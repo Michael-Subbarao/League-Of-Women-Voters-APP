@@ -27,7 +27,7 @@ function LWVRepCard(props) {
           </div>
           <div className={closed ? "lwvrep_closed" : "lwvrep_open"}>
             <div className="lwvrep_photo_wrapper">
-              <h4>
+              <h4 className = 'lwvrep_address'>
                 Address:{" "}
                 {address === undefined
                   ? ""
